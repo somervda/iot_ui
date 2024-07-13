@@ -1,7 +1,13 @@
-<div style="max-width: 1000px; background-color: white">
+<div style="width: 100%; background-color: white;height: 100%;">
   <mat-tab-group>
     <mat-tab label="Chart">
       <ng-template matTabContent><app-chart></app-chart> </ng-template>
+    </mat-tab>
+    <mat-tab label="Data">
+      <ng-template matTabContent><app-data></app-data> </ng-template>
+    </mat-tab>
+    <mat-tab label="Status">
+      <ng-template matTabContent><app-status></app-status> </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>

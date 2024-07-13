@@ -7,7 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 
 export enum Globals {
-  HOSTANDPORT = 'pi3.home:8000',
+  HOSTANDPORT = 'pi4.home:8000',
 }
 
 export const appConfig: ApplicationConfig = {
