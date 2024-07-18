@@ -2,6 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Globals } from '../app.config';
 
+export interface Device {
+  id: number;
+  name: string;
+  decription: string;
+}
+
+export interface Application1 {
+  id: number;
+  name: string;
+  decription: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,4 +30,35 @@ export class MeasurementsService {
     );
     return result;
   }
+
+  getApplications() {
+        let result = this.http.get<any>(
+          'http://' + Globals.HOSTANDPORT + '/applications'
+        );
+        return result;
+      }
+
+  getApplication(application_id:number) {
+        let result = this.http.get<any>(
+          'http://' + Globals.HOSTANDPORT + '/application/' + application_id.toString()
+        );
+        return result;
+      }
+
+  getDevices() {
+        let result = this.http.get<any>(
+          'http://' + Globals.HOSTANDPORT + '/devices'
+        );
+        return result;
+      }
+
+  getDevice(device_id:number) {
+        let result = this.http.get<any>(
+          'http://' + Globals.HOSTANDPORT + '/device/' + device_id.toString()
+        );
+        return result;
+      }
+
+
+
 }
