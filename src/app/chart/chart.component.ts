@@ -36,7 +36,15 @@ export class ChartComponent {
   view: [number, number] = [800, 400];
 
   getData() {
-    this.measurementService.getMeasurements(1, 1, 0, 5, 0).subscribe((results) => {
+    // this.measurementService.getMeasurements(1, 1, 0, 5, 0).subscribe((results) => {
+    //   // results.forEach((result) => {
+    //   //   let resultName = result.replace('results/', '').replace('.json', '');
+    //   //   this.results.push(resultName);
+    //   // });
+    //   // this.results.sort();
+    //   console.log(results)
+    // });
+    this.measurementService.getDevices().subscribe((results) => {
       // results.forEach((result) => {
       //   let resultName = result.replace('results/', '').replace('.json', '');
       //   this.results.push(resultName);
