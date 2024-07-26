@@ -1,0 +1,30 @@
+<div class="grid-4">
+    <div class="label">
+        Application
+    </div>
+    <div>
+
+        <mat-select [(ngModel)]="application_id" (selectionChange)="applicationSelected()">
+            @for (app of applications; track app) {
+            <mat-option [value]="app['id']">{{ app["name"] }}</mat-option>
+            }
+        </mat-select>
+
+    </div>
+    <div class="label">
+        Devices
+    </div>
+    <mat-select [(ngModel)]="device_id">
+        @for (dev of devices; track dev) {
+        <mat-option [value]="dev['id']">{{ dev["name"] }}</mat-option>
+        }
+    </mat-select>
+    <div class="label">
+        Measurements
+    </div>
+    <!-- <mat-select [(ngModel)]="measurement">
+        @for (dev of applications["measurements"]; track dev) {
+        <mat-option [value]="dev['id']">{{ dev["name"] }}</mat-option>
+        }
+    </mat-select> -->
+</div>

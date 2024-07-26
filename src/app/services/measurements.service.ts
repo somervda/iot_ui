@@ -8,12 +8,12 @@ export interface Device {
   decription: string;
 }
 
-export interface Application {
-  id: number;
-  name: string;
-  decription: string;
-  measurements: any;
-}
+// export interface Application {
+//   id: number;
+//   name: string;
+//   decription: string;
+//   measurements: any;
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -33,28 +33,28 @@ export class MeasurementsService {
   }
 
   getApplications() {
-        let result = this.http.get<Application[]>(
+        let result = this.http.get<any>(
           'http://' + Globals.HOSTANDPORT + '/applications'
         );
         return result;
       }
 
   getApplication(application_id:number) {
-        let result = this.http.get<Application>(
+        let result = this.http.get<any>(
           'http://' + Globals.HOSTANDPORT + '/application/' + application_id.toString()
         );
         return result;
       }
 
   getDevices() {
-        let result = this.http.get<Device[]>(
+        let result = this.http.get<any>(
           'http://' + Globals.HOSTANDPORT + '/devices'
         );
         return result;
       }
 
   getDevice(device_id:number) {
-        let result = this.http.get<Device>(
+        let result = this.http.get<any>(
           'http://' + Globals.HOSTANDPORT + '/device/' + device_id.toString()
         );
         return result;

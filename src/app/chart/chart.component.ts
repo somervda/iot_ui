@@ -4,6 +4,7 @@ import { MeasurementsService } from '../services/measurements.service';
 import { MatCardModule } from '@angular/material/card';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { SelectorComponent } from "../selector/selector.component";
 
 @Component({
   selector: 'app-chart',
@@ -12,8 +13,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatButtonModule,
     MatCardModule,
     NgxChartsModule,
-    MatExpansionModule
-  ],
+    MatExpansionModule,
+    SelectorComponent
+],
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.scss'
 })
