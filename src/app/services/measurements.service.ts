@@ -15,6 +15,16 @@ export interface Application {
   fields: string[];
 }
 
+export interface MeasurementQuery {
+  application_id: number;
+  device_id: number;
+  startUMT: number;
+  endUMT: number;
+  rows: number;
+  grouping: number;
+  field: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })

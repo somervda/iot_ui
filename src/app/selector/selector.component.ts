@@ -1,4 +1,4 @@
-import { Component ,Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -8,6 +8,7 @@ import {
   MeasurementsService,
   Application,
   Device,
+  MeasurementQuery,
 } from '../services/measurements.service';
 
 @Component({
@@ -18,8 +19,7 @@ import {
   styleUrl: './selector.component.scss',
 })
 export class SelectorComponent {
-
-  @Output() selectorChange = new EventEmitter<{application_id:number}>();
+  @Output() selectorChange = new EventEmitter<MeasurementQuery>();
 
   applications$$: Subscription | undefined;
   devices$$: Subscription | undefined;
@@ -33,7 +33,17 @@ export class SelectorComponent {
   field = '';
   duration = 0;
   end = 0;
-  summarize=0;
+  summarize = 0;
+
+  measurementQuery: MeasurementQuery = {
+    application_id: 0,
+    device_id: 0,
+    startUMT: 0,
+    endUMT: 0,
+    rows: 100,
+    grouping: 0,
+    field: '',
+  };
 
   constructor(private measurmentsService: MeasurementsService) {
     this.loadApplications();
@@ -48,22 +58,33 @@ export class SelectorComponent {
       .subscribe((applications) => {
         console.log(applications);
         this.applications = applications;
-        this.applicationSelected()
+        this.applicationSelected();
       });
   }
 
   applicationSelected() {
     console.log('applicationSelected:', this.application_id);
     this.fields = [];
-    this.field="";
+    this.field = '';
     if (this.applications) {
       this.application = this.applications.find(
         (application) => application.id == this.application_id
       );
       this.fields = this.application?.fields;
       console.log('applicationSelected :', this.application, this.fields);
-      this.selectorChange.emit({"application_id":this.application_id});
+      this.emitMeasurementQuery();
     }
+  }
+
+  emitMeasurementQuery() {
+    this.measurementQuery.application_id = this.application_id;
+    this.measurementQuery.device_id = this.device_id;
+    this.measurementQuery.startUMT = 0;
+    this.measurementQuery.endUMT = 0;
+    this.measurementQuery.rows = 100;
+    this.measurementQuery.grouping = this.summarize;
+    this.measurementQuery.field = this.field;
+    this.selectorChange.emit(this.measurementQuery);
   }
 
   loadDevices() {
