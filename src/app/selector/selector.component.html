@@ -11,15 +11,30 @@
     </mat-select>
   </div>
   <div class="label">Devices</div>
-  <mat-select [(ngModel)]="device_id">
-    @for (dev of devices; track dev) {
-    <mat-option [value]="dev.id">{{ dev.name }}</mat-option>
-    }
-  </mat-select>
+  <div>
+    <mat-select [(ngModel)]="device_id">
+      @for (dev of devices; track dev) {
+      <mat-option [value]="dev.id">{{ dev.name }}</mat-option>
+      }
+    </mat-select>
+  </div>
   <div class="label">Measurements</div>
-  <!-- <mat-select [(ngModel)]="measurement">
-        @for (dev of applications["measurements"]; track dev) {
-        <mat-option [value]="dev['id']">{{ dev["name"] }}</mat-option>
-        }
-    </mat-select> -->
+  <div>
+    @if (fields) {<mat-select [(ngModel)]="field">
+      @for (fieldName of fields; track field) {
+      <mat-option [value]="fieldName">{{ fieldName }}</mat-option>
+      } </mat-select
+    >}
+  </div>
+  <div style="grid-column: 1" class="label">Period</div>
+  <div>
+    <mat-select [(ngModel)]="period">
+      <mat-option [value]="0">6 hours</mat-option>
+      <mat-option [value]="1">24 Hours</mat-option>
+      <mat-option [value]="2">Week</mat-option>
+      <mat-option [value]="3">Month</mat-option>
+      <mat-option [value]="4">3 Months</mat-option>
+      <mat-option [value]="3">Year</mat-option>
+    </mat-select>
+  </div>
 </div>

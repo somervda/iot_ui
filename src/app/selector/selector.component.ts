@@ -26,7 +26,9 @@ export class SelectorComponent {
   application_id = -1;
   devices: Device[] | undefined;
   device_id = 1;
-  measurement = '';
+  fields: string[] | undefined;
+  field = '';
+  period = 0;
 
   constructor(private measurmentsService: MeasurementsService) {
     this.loadApplications();
@@ -46,6 +48,13 @@ export class SelectorComponent {
 
   applicationSelected() {
     console.log('applicationSelected:', this.application_id);
+    if (this.applications) {
+      this.application = this.applications.find(
+        (application) => application.id == this.application_id
+      );
+      this.fields = this.application?.fields;
+      console.log('applicationSelected :', this.application, this.fields);
+    }
   }
 
   loadDevices() {
