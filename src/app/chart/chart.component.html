@@ -1,11 +1,9 @@
 <mat-expansion-panel hideToggle>
   <mat-expansion-panel-header>
-    <mat-panel-title>Designer</mat-panel-title>
-    <mat-panel-description>
-      Select the IOT data and design the chart</mat-panel-description
-    >
+    <mat-panel-title>Query Designer</mat-panel-title>
   </mat-expansion-panel-header>
-  <app-selector></app-selector>
+
+  <app-selector (selectorChange)="selectorChanged($event)"></app-selector>
   <!-- <button mat-flat-button class="fButton" (click)="getData()">Get Data</button> -->
 </mat-expansion-panel>
 

@@ -26,15 +26,41 @@
       } </mat-select
     >}
   </div>
-  <div style="grid-column: 1" class="label">Period</div>
+  <div style="grid-column: 1" class="label">Duration</div>
   <div>
-    <mat-select [(ngModel)]="period">
+    <mat-select [(ngModel)]="duration">
       <mat-option [value]="0">6 hours</mat-option>
       <mat-option [value]="1">24 Hours</mat-option>
       <mat-option [value]="2">Week</mat-option>
       <mat-option [value]="3">Month</mat-option>
       <mat-option [value]="4">3 Months</mat-option>
-      <mat-option [value]="3">Year</mat-option>
+      <mat-option [value]="5">Year</mat-option>
+    </mat-select>
+  </div>
+  <div class="label">End</div>
+  <div>
+    <mat-select [(ngModel)]="duration">
+      <mat-option [value]="0">Now</mat-option>
+      <mat-option [value]="1">Start of Today</mat-option>
+      <mat-option [value]="2">Start of this Week</mat-option>
+      <mat-option [value]="3">Start of this Month</mat-option>
+      <mat-option [value]="4">Start of this Year</mat-option>
+    </mat-select>
+  </div>
+  <div style="grid-column: 1" class="label">Summarize</div>
+  <div>
+    <mat-select [(ngModel)]="summarize">
+      <mat-option [value]="0">None</mat-option>
+      <mat-option [value]="1">5 Minutes</mat-option>
+      <mat-option [value]="2">15 Minutes</mat-option>
+      <mat-option [value]="3">Hour</mat-option>
+      <mat-option [value]="4">6 Hours</mat-option>
+      <mat-option [value]="5">Daily</mat-option>
+      <mat-option [value]="6">Weekly</mat-option>
+      <mat-option [value]="7">Monthly</mat-option>
+      <mat-option [value]="8">Quarterly</mat-option>
+      <mat-option [value]="9">Yearly</mat-option>
     </mat-select>
   </div>
 </div>
+

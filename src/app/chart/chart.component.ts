@@ -20,6 +20,9 @@ import { SelectorComponent } from "../selector/selector.component";
   styleUrl: './chart.component.scss'
 })
 export class ChartComponent {
+
+
+
   constructor(private measurementService: MeasurementsService) {
   }
 
@@ -54,6 +57,11 @@ export class ChartComponent {
       // this.results.sort();
       console.log(results)
     });
+  }
+
+  selectorChanged(app_id: any){
+    console.log("selectorChanged:",app_id)
+
   }
 
 }

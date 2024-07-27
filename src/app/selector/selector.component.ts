@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component ,Output, EventEmitter } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -18,17 +18,22 @@ import {
   styleUrl: './selector.component.scss',
 })
 export class SelectorComponent {
+
+  @Output() selectorChange = new EventEmitter<{application_id:number}>();
+
   applications$$: Subscription | undefined;
   devices$$: Subscription | undefined;
 
   applications: Application[] | undefined;
   application: Application | undefined;
-  application_id = -1;
+  application_id = 1;
   devices: Device[] | undefined;
   device_id = 1;
   fields: string[] | undefined;
   field = '';
-  period = 0;
+  duration = 0;
+  end = 0;
+  summarize=0;
 
   constructor(private measurmentsService: MeasurementsService) {
     this.loadApplications();
@@ -43,17 +48,21 @@ export class SelectorComponent {
       .subscribe((applications) => {
         console.log(applications);
         this.applications = applications;
+        this.applicationSelected()
       });
   }
 
   applicationSelected() {
     console.log('applicationSelected:', this.application_id);
+    this.fields = [];
+    this.field="";
     if (this.applications) {
       this.application = this.applications.find(
         (application) => application.id == this.application_id
       );
       this.fields = this.application?.fields;
       console.log('applicationSelected :', this.application, this.fields);
+      this.selectorChange.emit({"application_id":this.application_id});
     }
   }
 
