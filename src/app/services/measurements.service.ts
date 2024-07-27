@@ -5,61 +5,75 @@ import { Globals } from '../app.config';
 export interface Device {
   id: number;
   name: string;
-  decription: string;
+  description: string;
 }
 
-// export interface Application {
-//   id: number;
-//   name: string;
-//   decription: string;
-//   measurements: any;
-// }
+export interface Application {
+  id: number;
+  name: string;
+  description: string;
+  measurements: {};
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MeasurementsService {
-
   constructor(private http: HttpClient) {}
 
-  getMeasurements(application_id: number, device_id: number, startUMT: number, rows: number,grouping: number) {
+  getMeasurements(
+    application_id: number,
+    device_id: number,
+    startUMT: number,
+    rows: number,
+    grouping: number
+  ) {
     // returns an observable
     let result = this.http.get<any>(
-      'http://' + Globals.HOSTANDPORT + '/measurements/' + application_id.toString() +
-      '/' + device_id.toString() + '/' + startUMT.toString() + 
-      '/' + rows.toString() + '/' + grouping.toString() 
+      'http://' +
+        Globals.HOSTANDPORT +
+        '/measurements/' +
+        application_id.toString() +
+        '/' +
+        device_id.toString() +
+        '/' +
+        startUMT.toString() +
+        '/' +
+        rows.toString() +
+        '/' +
+        grouping.toString()
     );
     return result;
   }
 
   getApplications() {
-        let result = this.http.get<any>(
-          'http://' + Globals.HOSTANDPORT + '/applications'
-        );
-        return result;
-      }
+    let result = this.http.get<Application[]>(
+      'http://' + Globals.HOSTANDPORT + '/applications'
+    );
+    return result;
+  }
 
-  getApplication(application_id:number) {
-        let result = this.http.get<any>(
-          'http://' + Globals.HOSTANDPORT + '/application/' + application_id.toString()
-        );
-        return result;
-      }
+  getApplication(application_id: number) {
+    let result = this.http.get<Application>(
+      'http://' +
+        Globals.HOSTANDPORT +
+        '/application/' +
+        application_id.toString()
+    );
+    return result;
+  }
 
   getDevices() {
-        let result = this.http.get<any>(
-          'http://' + Globals.HOSTANDPORT + '/devices'
-        );
-        return result;
-      }
+    let result = this.http.get<any>(
+      'http://' + Globals.HOSTANDPORT + '/devices'
+    );
+    return result;
+  }
 
-  getDevice(device_id:number) {
-        let result = this.http.get<any>(
-          'http://' + Globals.HOSTANDPORT + '/device/' + device_id.toString()
-        );
-        return result;
-      }
-
-
-
+  getDevice(device_id: number) {
+    let result = this.http.get<any>(
+      'http://' + Globals.HOSTANDPORT + '/device/' + device_id.toString()
+    );
+    return result;
+  }
 }
