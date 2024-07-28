@@ -3,8 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MeasurementsService } from '../services/measurements.service';
 import { MatCardModule } from '@angular/material/card';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import {MatExpansionModule} from '@angular/material/expansion';
-import { SelectorComponent } from "../selector/selector.component";
+import { MatExpansionModule } from '@angular/material/expansion';
+import { SelectorComponent } from '../selector/selector.component';
 
 @Component({
   selector: 'app-chart',
@@ -14,17 +14,13 @@ import { SelectorComponent } from "../selector/selector.component";
     MatCardModule,
     NgxChartsModule,
     MatExpansionModule,
-    SelectorComponent
-],
+    SelectorComponent,
+  ],
   templateUrl: './chart.component.html',
-  styleUrl: './chart.component.scss'
+  styleUrl: './chart.component.scss',
 })
 export class ChartComponent {
-
-
-
-  constructor(private measurementService: MeasurementsService) {
-  }
+  constructor(private measurementService: MeasurementsService) {}
 
   // options
   multi: any;
@@ -55,13 +51,11 @@ export class ChartComponent {
       //   this.results.push(resultName);
       // });
       // this.results.sort();
-      console.log(results)
+      console.log(results);
     });
   }
 
-  selectorChanged(app_id: any){
-    console.log("selectorChanged:",app_id)
-
+  selectorChanged(event: any) {
+    console.log('*selectorChanged:', event);
   }
-
 }

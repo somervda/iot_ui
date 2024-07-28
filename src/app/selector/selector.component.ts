@@ -4,6 +4,8 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { DateTime } from 'luxon';
+
 import {
   MeasurementsService,
   Application,
@@ -77,14 +79,34 @@ export class SelectorComponent {
   }
 
   emitMeasurementQuery() {
-    this.measurementQuery.application_id = this.application_id;
-    this.measurementQuery.device_id = this.device_id;
-    this.measurementQuery.startUMT = 0;
-    this.measurementQuery.endUMT = 0;
-    this.measurementQuery.rows = 100;
-    this.measurementQuery.grouping = this.summarize;
-    this.measurementQuery.field = this.field;
-    this.selectorChange.emit(this.measurementQuery);
+    this.setStartUMT();
+    // Emit measurement query if values available
+    if (this.application_id > 0 && this.field != '') {
+      this.measurementQuery.application_id = this.application_id;
+      this.measurementQuery.device_id = this.device_id;
+      this.measurementQuery.startUMT = 0;
+      this.measurementQuery.endUMT = 0;
+      this.measurementQuery.rows = 100;
+      this.measurementQuery.grouping = this.summarize;
+      this.measurementQuery.field = this.field;
+      this.selectorChange.emit(this.measurementQuery);
+    }
+  }
+
+  setStartUMT() {
+    // Calculate start and end umt dates based on duration and end selections
+    // <mat-option [value]="0">Now</mat-option>
+    // <mat-option [value]="1">Start of Today</mat-option>
+    // <mat-option [value]="2">Start of this Week</mat-option>
+    // <mat-option [value]="3">Start of this Month</mat-option>
+    // <mat-option [value]="4">Start of this Year</mat-option>
+    let currentUMT = DateTime.local() // get the current time in local timezone
+      .setZone('GMT'); // change time zone back to GMT (zero offset)
+    console.log('currentUMT:', currentUMT.valueOf());
+    let monthUMT = DateTime.local() // get the current time in local timezone
+      .startOf('month') // set the time to the start of the current day
+      .setZone('GMT'); // change time zone back to GMT (zero offset)
+    console.log('monthUMT:', monthUMT.valueOf());
   }
 
   loadDevices() {
