@@ -1,1 +1,10 @@
-<p>status works!</p>
+<div class="grid-4">
+    <div class="label">Devices</div>
+    <mat-select [(ngModel)]="device_id">
+        @for (dev of devices; track dev) {
+        <mat-option [value]="dev.id">{{ dev.name }}:{{ dev.description }}</mat-option>
+        }
+    </mat-select>
+    <div>
+    </div>
+</div>
