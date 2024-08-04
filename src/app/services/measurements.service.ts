@@ -15,6 +15,15 @@ export interface Application {
   fields: string[];
 }
 
+export interface Status {
+  application_id: number;
+  device_id: number;
+  name: string;
+  description: string;
+  umt: number;
+  data: {};
+}
+
 export interface MeasurementQuery {
   application_id: number;
   device_id: number;
@@ -69,6 +78,16 @@ export class MeasurementsService {
         Globals.HOSTANDPORT +
         '/application/' +
         application_id.toString()
+    );
+    return result;
+  }
+
+  getDeviceApplicationsStatus(device_id: number) {
+    let result = this.http.get<Status[]>(
+      'http://' +
+        Globals.HOSTANDPORT +
+        '/deviceApplicationsStatus/' +
+        device_id.toString()
     );
     return result;
   }

@@ -1,10 +1,18 @@
-<div class="grid-4">
-    <div class="label">Devices</div>
-    <mat-select [(ngModel)]="device_id">
+<mat-card>
+  <mat-card-content>
+    <div class="grid-2">
+      <div class="label">Device</div>
+      <mat-select [(ngModel)]="device_id" (selectionChange)="deviceSelected()">
         @for (dev of devices; track dev) {
-        <mat-option [value]="dev.id">{{ dev.name }}:{{ dev.description }}</mat-option>
+        <mat-option [value]="dev.id"></mat-option>
+          {{ dev.name }}: {{ dev.description }}</mat-option
+        >
         }
-    </mat-select>
-    <div>
+      </mat-select>
+      <div></div>
     </div>
-</div>
+  </mat-card-content>
+  @for (devStatus of statuses; track devStatus){
+  <app-devicestatus [status]="devStatus"></app-devicestatus>
+  }
+</mat-card>

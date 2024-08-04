@@ -9,7 +9,7 @@
 @media (min-width: 1000px) {
   .grid-4 {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 2fr;
+    grid-template-columns: 100px 2fr 100px 2fr;
     grid-gap: 10px;
     grid-gap: 10px;
   }
@@ -18,7 +18,7 @@
 @media (min-width: 400px) and (max-width: 1000px) {
   .grid-4 {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 100px 2fr;
     grid-gap: 10px;
     max-width: 400px;
     grid-gap: 10px;
@@ -26,11 +26,11 @@
 }
 
 .label {
-  font-weight:500;
+  font-weight: 500;
   padding: 5px;
 }
 
-mat-select{
+mat-select {
   background-color: rgb(239, 239, 239);
   border-radius: 3px;
   padding: 2px;

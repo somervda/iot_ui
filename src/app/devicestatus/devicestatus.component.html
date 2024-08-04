@@ -1,0 +1,11 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title> {{ status?.name }}</mat-card-title>
+    <mat-card-subtitle>{{ status?.description }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    @for (measurement of measurements; track measurement){
+    <div>{{ measurement.value }} {{ measurement.key }}</div>
+    }
+  </mat-card-content>
+</mat-card>
