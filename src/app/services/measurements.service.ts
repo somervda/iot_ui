@@ -28,7 +28,6 @@ export interface MeasurementQuery {
   application_id: number;
   device_id: number;
   startUMT: number;
-  endUMT: number;
   rows: number;
   grouping: number;
   field: string;
@@ -77,6 +76,16 @@ export class MeasurementsService {
       'http://' +
         Globals.HOSTANDPORT +
         '/application/' +
+        application_id.toString()
+    );
+    return result;
+  }
+
+  getApplicationDevices(application_id: number) {
+    let result = this.http.get<Device[]>(
+      'http://' +
+        Globals.HOSTANDPORT +
+        '/applicationDevices/' +
         application_id.toString()
     );
     return result;

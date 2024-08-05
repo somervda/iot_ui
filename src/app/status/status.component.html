@@ -4,9 +4,8 @@
       <div class="label">Device</div>
       <mat-select [(ngModel)]="device_id" (selectionChange)="deviceSelected()">
         @for (dev of devices; track dev) {
-        <mat-option [value]="dev.id"></mat-option>
-          {{ dev.name }}: {{ dev.description }}</mat-option
-        >
+        <mat-option [value]="dev.id">
+          {{ dev.name }}: {{ dev.description }}</mat-option>
         }
       </mat-select>
       <div></div>

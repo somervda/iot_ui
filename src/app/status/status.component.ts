@@ -26,7 +26,7 @@ export class StatusComponent {
   devices$$: Subscription | undefined;
   status$$: Subscription | undefined;
   devices: Device[] | undefined;
-  device_id = 1;
+  device_id = -1;
   statuses: Status[] | undefined;
 
   constructor(private measurementsService: MeasurementsService) {

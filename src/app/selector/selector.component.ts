@@ -41,7 +41,6 @@ export class SelectorComponent {
     application_id: 0,
     device_id: 0,
     startUMT: 0,
-    endUMT: 0,
     rows: 100,
     grouping: 0,
     field: '',
@@ -49,7 +48,7 @@ export class SelectorComponent {
 
   constructor(private measurmentsService: MeasurementsService) {
     this.loadApplications();
-    this.loadDevices();
+
   }
 
   loadApplications() {
@@ -66,6 +65,7 @@ export class SelectorComponent {
 
   applicationSelected() {
     console.log('applicationSelected:', this.application_id);
+
     this.fields = [];
     this.field = '';
     if (this.applications) {
@@ -76,16 +76,16 @@ export class SelectorComponent {
       console.log('applicationSelected :', this.application, this.fields);
       this.emitMeasurementQuery();
     }
+    this.loadApplicationDevices();
   }
 
   emitMeasurementQuery() {
     this.setStartUMT();
     // Emit measurement query if values available
-    if (this.application_id > 0 && this.field != '') {
+    if (this.application_id > 0 && this.field != '' && this.device_id >0) {
       this.measurementQuery.application_id = this.application_id;
       this.measurementQuery.device_id = this.device_id;
       this.measurementQuery.startUMT = 0;
-      this.measurementQuery.endUMT = 0;
       this.measurementQuery.rows = 100;
       this.measurementQuery.grouping = this.summarize;
       this.measurementQuery.field = this.field;
@@ -94,29 +94,45 @@ export class SelectorComponent {
   }
 
   setStartUMT() {
-    // Calculate start and end umt dates based on duration and end selections
-    // <mat-option [value]="0">Now</mat-option>
-    // <mat-option [value]="1">Start of Today</mat-option>
-    // <mat-option [value]="2">Start of this Week</mat-option>
-    // <mat-option [value]="3">Start of this Month</mat-option>
-    // <mat-option [value]="4">Start of this Year</mat-option>
-    let currentUMT = DateTime.local() // get the current time in local timezone
+    // Calculate start umt
+    // <mat-option [value]="0">6 hours</mat-option>
+    // <mat-option [value]="1">24 Hours</mat-option>
+    // <mat-option [value]="2">Week</mat-option>
+    // <mat-option [value]="3">Month</mat-option>
+    // <mat-option [value]="4">3 Months</mat-option>
+    // <mat-option [value]="5">Year</mat-option>
+    let UMT = DateTime.local() // get the current time in local timezone
       .setZone('GMT'); // change time zone back to GMT (zero offset)
-    console.log('currentUMT:', currentUMT.valueOf());
-    let monthUMT = DateTime.local() // get the current time in local timezone
-      .startOf('month') // set the time to the start of the current day
-      .setZone('GMT'); // change time zone back to GMT (zero offset)
-    console.log('monthUMT:', monthUMT.valueOf());
+    console.log('currentUMT:', UMT.valueOf());
+    // set the period start based on duration
+    switch(this.duration) { 
+      case 0: { 
+        UMT = UMT.minus({"hours":6});
+        break;
+      }
+      case 1: { 
+        UMT = UMT.minus({"hours":24})
+        break;
+      }
+      case 2: { 
+        UMT = UMT.startOf('week');
+        break;
+      }
+    }
+    // let monthUMT = DateTime.local() // get the current time in local timezone
+    //   .startOf('month') // set the time to the start of the current day
+    //   .setZone('GMT'); // change time zone back to GMT (zero offset)
+    console.log('UMT:', UMT.valueOf());
   }
 
-  loadDevices() {
-    this.applications = [];
+  loadApplicationDevices() {
+    this.devices = [];
     // get the array of available result files
     this.devices$$ = this.measurmentsService
-      .getDevices()
-      .subscribe((devices) => {
-        console.log(devices);
-        this.devices = devices;
+      .getApplicationDevices(this.application_id)
+      .subscribe((applicationdevices) => {
+        console.log("loadApplicationDevices:",applicationdevices);
+        this.devices = applicationdevices;
       });
   }
 }
