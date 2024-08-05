@@ -27,7 +27,7 @@ export interface Status {
 export interface MeasurementQuery {
   application_id: number;
   device_id: number;
-  startUMT: number;
+  umt: number;
   rows: number;
   grouping: number;
   field: string;
@@ -60,6 +60,34 @@ export class MeasurementsService {
         rows.toString() +
         '/' +
         grouping.toString()
+    );
+    return result;
+  }
+
+  getSeriesMeasurements(
+    application_id: number,
+    device_id: number,
+    umt: number,
+    rows: number,
+    grouping: number,
+    field: string
+  ) {
+    // returns an observable
+    let result = this.http.get<any>(
+      'http://' +
+        Globals.HOSTANDPORT +
+        '/seriesmeasurements/' +
+        application_id.toString() +
+        '/' +
+        device_id.toString() +
+        '/' +
+        umt.toString() +
+        '/' +
+        rows.toString() +
+        '/' +
+        grouping.toString() +
+        '/' +
+        field
     );
     return result;
   }

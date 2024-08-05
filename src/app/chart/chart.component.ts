@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MeasurementsService } from '../services/measurements.service';
+import {
+  MeasurementQuery,
+  MeasurementsService,
+} from '../services/measurements.service';
 import { MatCardModule } from '@angular/material/card';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SelectorComponent } from '../selector/selector.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
@@ -20,6 +24,7 @@ import { SelectorComponent } from '../selector/selector.component';
   styleUrl: './chart.component.scss',
 })
 export class ChartComponent {
+  measurements$$: Subscription | undefined;
   constructor(private measurementService: MeasurementsService) {}
 
   // options
@@ -37,7 +42,7 @@ export class ChartComponent {
   view: [number, number] = [800, 400];
 
   getData() {
-    // this.measurementService.getMeasurements(1, 1, 0, 5, 0).subscribe((results) => {
+    // this.measurementService.getSeriesMeasurements(1, 1, 0, 5, 0).subscribe((results) => {
     //   // results.forEach((result) => {
     //   //   let resultName = result.replace('results/', '').replace('.json', '');
     //   //   this.results.push(resultName);
@@ -55,7 +60,19 @@ export class ChartComponent {
     });
   }
 
-  selectorChanged(event: any) {
-    console.log('*selectorChanged:', event);
+  selectorChanged(measurementQuery: MeasurementQuery) {
+    console.log('*selectorChanged:', measurementQuery);
+    this.measurements$$ = this.measurementService
+      .getSeriesMeasurements(
+        measurementQuery.application_id,
+        measurementQuery.device_id,
+        measurementQuery.umt,
+        measurementQuery.rows,
+        measurementQuery.grouping,
+        measurementQuery.field
+      )
+      .subscribe((results) => {
+        console.log('getSeriesMeasurements', results);
+      });
   }
 }
