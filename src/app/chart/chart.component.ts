@@ -25,8 +25,7 @@ import { Subscription } from 'rxjs';
 })
 export class ChartComponent {
   measurements$$: Subscription | undefined;
-  constructor(private measurementService: MeasurementsService) {}
-
+  
   // options
   multi: any;
   legend: boolean = false;
@@ -40,25 +39,8 @@ export class ChartComponent {
   yAxisLabel: string = 'Hz';
   timeline: boolean = false;
   view: [number, number] = [800, 400];
-
-  getData() {
-    // this.measurementService.getSeriesMeasurements(1, 1, 0, 5, 0).subscribe((results) => {
-    //   // results.forEach((result) => {
-    //   //   let resultName = result.replace('results/', '').replace('.json', '');
-    //   //   this.results.push(resultName);
-    //   // });
-    //   // this.results.sort();
-    //   console.log(results)
-    // });
-    this.measurementService.getDevices().subscribe((results) => {
-      // results.forEach((result) => {
-      //   let resultName = result.replace('results/', '').replace('.json', '');
-      //   this.results.push(resultName);
-      // });
-      // this.results.sort();
-      console.log(results);
-    });
-  }
+  
+  constructor(private measurementService: MeasurementsService) {}
 
   selectorChanged(measurementQuery: MeasurementQuery) {
     console.log('*selectorChanged:', measurementQuery);
