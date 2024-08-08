@@ -24,10 +24,7 @@
   <div class="label">Measurements</div>
   <div>
     @if (fields) {
-    <mat-select
-      [(ngModel)]="field"
-      (selectionChange)="tryEmitMeasurementQuery()"
-    >
+    <mat-select [(ngModel)]="field" (selectionChange)="fieldSelected()">
       @for (fieldName of fields; track fieldName) {
       <mat-option [value]="fieldName">{{ fieldName }}</mat-option>
       }
@@ -50,10 +47,7 @@
   </div>
   <div class="label">Summarize</div>
   <div>
-    <mat-select
-      [(ngModel)]="summarize"
-      (selectionChange)="tryEmitMeasurementQuery()"
-    >
+    <mat-select [(ngModel)]="summarize" (selectionChange)="summarySelected()">
       <mat-option [value]="0">None</mat-option>
       <mat-option [value]="1">5 Minutes</mat-option>
       <mat-option [value]="2">15 Minutes</mat-option>

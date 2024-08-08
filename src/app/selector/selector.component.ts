@@ -36,6 +36,7 @@ export class SelectorComponent {
   duration = 0;
   end = 0;
   summarize = 0;
+  isSummarized = false;
 
   measurementQuery: MeasurementQuery = {
     application_id: 0,
@@ -65,17 +66,45 @@ export class SelectorComponent {
   applicationSelected() {
     console.log('applicationSelected:', this.application_id);
 
-    this.fields = [];
-    this.field = '';
     if (this.applications) {
       this.application = this.applications.find(
         (application) => application.id == this.application_id
       );
-      this.fields = this.application?.fields;
+
       console.log('applicationSelected :', this.application, this.fields);
-      this.tryEmitMeasurementQuery();
     }
     this.loadApplicationDevices();
+    this.loadApplicationFields();
+  }
+
+  loadApplicationFields() {
+    this.fields = [];
+    this.field = '';
+    if (this.summarize == 0) {
+      this.fields = this.application?.fields;
+    } else {
+      this.application?.fields.forEach((field) => {
+        this.fields?.push('avg_' + field);
+        this.fields?.push('min_' + field);
+        this.fields?.push('max_' + field);
+      });
+    }
+  }
+
+  fieldSelected() {
+    this.tryEmitMeasurementQuery();
+  }
+
+  summarySelected() {
+    // Only update fields if we are changing between summarized and not summarized
+    if (
+      (this.isSummarized && this.summarize == 0) ||
+      (!this.isSummarized && this.summarize > 0)
+    )
+      this.loadApplicationFields();
+
+    this.tryEmitMeasurementQuery();
+    this.isSummarized = this.summarize > 0;
   }
 
   tryEmitMeasurementQuery() {
@@ -95,6 +124,9 @@ export class SelectorComponent {
       this.measurementQuery.rows = 1000;
       this.measurementQuery.grouping = this.summarize;
       this.measurementQuery.field = this.field;
+      this.selectorChange.emit(this.measurementQuery);
+    } else {
+      this.measurementQuery.application_id = -1;
       this.selectorChange.emit(this.measurementQuery);
     }
   }

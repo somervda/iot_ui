@@ -73,7 +73,7 @@ export class MeasurementsService {
     field: string
   ) {
     // returns an observable
-    let result = this.http.get<any>(
+    let result = this.http.get<{ name: string; value: number }[]>(
       'http://' +
         Globals.HOSTANDPORT +
         '/seriesmeasurements/' +

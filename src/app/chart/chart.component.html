@@ -7,19 +7,24 @@
   <!-- <button mat-flat-button class="fButton" (click)="getData()">Get Data</button> -->
 </mat-expansion-panel>
 
-<ngx-charts-line-chart
-  [legend]="legend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxis]="xAxis"
-  [yAxis]="yAxis"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [timeline]="timeline"
-  [results]="multi"
->
-  <ng-template #tooltipTemplate let-model="model">
-    <span class="tooltip-label">{{ model.name.toLocaleString("en-US") }}</span>
-    <span class="tooltip-val">{{ model.value }}</span>
-  </ng-template>
-</ngx-charts-line-chart>
+@if (displayChart) {
+<div style="width: 100%; height: device-height">
+  <ngx-charts-line-chart
+    [results]="multi"
+    [timeline]="timeline"
+    [legend]="legend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxis]="xAxis"
+    [yAxis]="yAxis"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [yScaleMin]="yScaleMin"
+  >
+    <ng-template #tooltipTemplate let-model="model">
+      <span class="tooltip-label">{{ toMyDate(model.name) }}</span>
+      <span class="tooltip-val">{{ model.value + " " + field }}</span>
+    </ng-template>
+  </ngx-charts-line-chart>
+</div>
+}
