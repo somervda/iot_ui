@@ -21,6 +21,7 @@
       }
     </mat-select>
   </div>
+  @if(includeFields){
   <div class="label">Measurements</div>
   <div>
     @if (fields) {
@@ -31,6 +32,7 @@
     </mat-select>
     }
   </div>
+}
   <div style="grid-column: 1" class="label">Start From</div>
   <div>
     <mat-select

@@ -92,6 +92,31 @@ export class MeasurementsService {
     return result;
   }
 
+  getFlatMeasurements(
+    application_id: number,
+    device_id: number,
+    umt: number,
+    rows: number,
+    grouping: number
+  ) {
+    // returns an observable
+    let result = this.http.get<[]>(
+      'http://' +
+        Globals.HOSTANDPORT +
+        '/flatmeasurements/' +
+        application_id.toString() +
+        '/' +
+        device_id.toString() +
+        '/' +
+        umt.toString() +
+        '/' +
+        rows.toString() +
+        '/' +
+        grouping.toString()
+    );
+    return result;
+  }
+
   getApplications() {
     let result = this.http.get<Application[]>(
       'http://' + Globals.HOSTANDPORT + '/applications'

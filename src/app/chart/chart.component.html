@@ -3,7 +3,7 @@
     <mat-panel-title>Query Designer</mat-panel-title>
   </mat-expansion-panel-header>
 
-  <app-selector (selectorChange)="selectorChanged($event)"></app-selector>
+  <app-selector (selectorChange)="selectorChanged($event)" [includeFields]=true></app-selector>
   <!-- <button mat-flat-button class="fButton" (click)="getData()">Get Data</button> -->
 </mat-expansion-panel>
 

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -21,6 +21,7 @@ import {
   styleUrl: './selector.component.scss',
 })
 export class SelectorComponent {
+  @Input() includeFields: boolean =false;
   @Output() selectorChange = new EventEmitter<MeasurementQuery>();
 
   applications$$: Subscription | undefined;
@@ -74,7 +75,8 @@ export class SelectorComponent {
       console.log('applicationSelected :', this.application, this.fields);
     }
     this.loadApplicationDevices();
-    this.loadApplicationFields();
+    if (this.includeFields) {
+    this.loadApplicationFields();}
   }
 
   loadApplicationFields() {
@@ -117,13 +119,18 @@ export class SelectorComponent {
       this.device_id
     );
     // Emit measurement query if values selected
-    if (this.application_id > 0 && this.field != '' && this.device_id > 0) {
+    if (this.application_id > 0 && (this.field != '' || this.includeFields==false) && this.device_id > 0) {
       this.measurementQuery.application_id = this.application_id;
       this.measurementQuery.device_id = this.device_id;
       this.setStartUMT();
       this.measurementQuery.rows = 1000;
       this.measurementQuery.grouping = this.summarize;
+      if (this.includeFields) {
       this.measurementQuery.field = this.field;
+      }
+      else {
+        this.measurementQuery.field = '';
+      }
       this.selectorChange.emit(this.measurementQuery);
     } else {
       this.measurementQuery.application_id = -1;

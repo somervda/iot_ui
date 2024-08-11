@@ -1,1 +1,9 @@
-<p>data works!</p>
+<mat-expansion-panel expanded="True">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Query Designer</mat-panel-title>
+    </mat-expansion-panel-header>
+      <app-selector (selectorChange)="selectorChanged($event)" [includeFields]=false></app-selector>
+  </mat-expansion-panel>
+  @if(displayData){
+    {{ resultsAsString }}
+  }
