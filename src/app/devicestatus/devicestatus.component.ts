@@ -26,4 +26,11 @@ export class DevicestatusComponent implements OnInit {
       }
     }
   }
+
+  umtToLocal(umt: number | undefined) {
+    if (umt) {
+      let date = new Date(umt * 1000);
+      return date.toLocaleTimeString();
+    } else return 'Unknown';
+  }
 }

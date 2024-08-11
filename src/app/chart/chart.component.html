@@ -8,7 +8,7 @@
 </mat-expansion-panel>
 
 @if (displayChart) {
-<div style="width: 100%; height: device-height">
+<div style="width: 100%; height: 600px">
   <ngx-charts-line-chart
     [results]="multi"
     [timeline]="timeline"
@@ -23,8 +23,13 @@
   >
     <ng-template #tooltipTemplate let-model="model">
       <span class="tooltip-label">{{ toMyDate(model.name) }}</span>
-      <span class="tooltip-val">{{ model.value + " " + field }}</span>
+      <span class="tooltip-val">{{ model.value + " " + displayField }}</span>
     </ng-template>
   </ngx-charts-line-chart>
 </div>
-}
+@if(celsiusFields.includes(field)){
+<mat-slide-toggle (change)="slide($event)" [checked]="showFahrenheit">
+  Fahrenheit
+</mat-slide-toggle>
+
+} }

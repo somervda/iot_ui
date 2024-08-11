@@ -1,7 +1,9 @@
 <mat-card appearance="outlined">
   <mat-card-header>
     <mat-card-title> {{ status?.name }}</mat-card-title>
-    <mat-card-subtitle>{{ status?.description }}</mat-card-subtitle>
+    <mat-card-subtitle>{{
+      status?.description + ": " + umtToLocal(status?.umt)
+    }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     @for (measurement of measurements; track measurement){
