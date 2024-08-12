@@ -49,7 +49,20 @@ export class DataComponent {
         .subscribe((results) => {
           console.log('getFlatMeasurements', results);
           if (results.length > 0) {
+            // get a array of columns we want to display 
             this.columns = Object.keys(results[0]);
+            this.columns.forEach( (column, index) => {
+              if(column == "id") this.columns.splice(index,1);
+            });
+            this.columns.forEach( (column, index) => {
+              if(column == "device_id") this.columns.splice(index,1);
+            });
+            this.columns.forEach( (column, index) => {
+              if(column == "application_id") this.columns.splice(index,1);
+            });
+            this.columns.forEach( (column, index) => {
+              if(column == "umt") this.columns.splice(index,1);
+            });
             console.log('columns:', this.columns);
             this.results = results;
             this.displayData = true;

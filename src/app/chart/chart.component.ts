@@ -28,6 +28,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 export class ChartComponent {
   measurements$$: Subscription | undefined;
 
+ 
+
   displayChart = false;
   // options
   multi = [
@@ -82,12 +84,18 @@ export class ChartComponent {
   measurementQuery: MeasurementQuery | undefined;
   celsiusFields = ['celsius', 'avg_celsius', 'min_celsius', 'max_celsius'];
 
+  counter=0;
+
   constructor(private measurementService: MeasurementsService) {}
 
   selectorChanged(measurementQuery: MeasurementQuery) {
     this.measurementQuery = measurementQuery;
     console.log('*selectorChanged:', measurementQuery);
     this.getChart();
+  }
+
+  formatX(val:string) {
+    return this.counter.toString();
   }
 
   getChart() {
@@ -146,6 +154,7 @@ export class ChartComponent {
               this.displayField = this.field;
             }
             this.yAxisLabel = this.displayField;
+            this.counter = 0;
             this.displayChart = true;
           });
       } else {
