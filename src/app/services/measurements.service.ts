@@ -100,7 +100,7 @@ export class MeasurementsService {
     grouping: number
   ) {
     // returns an observable
-    let result = this.http.get<[]>(
+    let result = this.http.get<{}[]>(
       'http://' +
         Globals.HOSTANDPORT +
         '/flatmeasurements/' +

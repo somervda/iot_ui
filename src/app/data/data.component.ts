@@ -24,9 +24,9 @@ import { MatTableModule } from '@angular/material/table';
 export class DataComponent {
   measurements$$: Subscription | undefined;
   displayData = false;
-  resultsAsString = '';
-  results = [];
-  columns = [{ title: 'id' }];
+
+  results: {}[] = [];
+  columns: string[] = [];
 
   constructor(private measurementService: MeasurementsService) {}
 
@@ -48,9 +48,12 @@ export class DataComponent {
         )
         .subscribe((results) => {
           console.log('getFlatMeasurements', results);
-          this.resultsAsString = JSON.stringify(results);
-          this.results = results;
-          this.displayData = true;
+          if (results.length > 0) {
+            this.columns = Object.keys(results[0]);
+            console.log('columns:', this.columns);
+            this.results = results;
+            this.displayData = true;
+          }
         });
     } else {
       this.displayData = false;
