@@ -78,14 +78,8 @@ export class ChartComponent {
   xAxisLabel: string = 'Date/Time';
   yAxisLabel: string = 'Value';
   timeline: boolean = true;
-  xAxisTicks = [
-    (new Date("2024-08-13 00:00:00")).toISOString(),
-    new Date("2024-08-13 12:00:00").toISOString(),
-    new Date("2024-08-14 00:00:00").toISOString(),
-    new Date("2024-08-14 12:00:00").toISOString(),
+  xTickStyle = "hours"
 
-  ];
-  // xAxisTicks :any[] = [22,33  ];
   field = '';
   displayField = '';
   showFahrenheit = false;
@@ -122,7 +116,17 @@ export class ChartComponent {
           .subscribe((results) => {
             console.log('getSeriesMeasurements', results);
             let series: { name: string; value: number }[] = [];
-
+            let rangeSeconds = Math.trunc(((new Date()).valueOf()/1000) - measurementQuery.umt);
+            
+            console.log(rangeSeconds);
+            if (rangeSeconds<87000)
+              this.xTickStyle="hour";
+            else if (rangeSeconds<604800) {
+              this.xTickStyle="day";
+            }
+            else  {
+              this.xTickStyle="full";
+            }
             results.forEach((result, idx: number) => {
               let value = 0;
               if (
@@ -177,5 +181,21 @@ export class ChartComponent {
     console.log(val);
     this.showFahrenheit = val.checked;
     this.getChart();
+  }
+
+  formatHour(val:string ) {
+    let date = new Date(val);
+    return date.toLocaleTimeString();
+  }
+  formatDay(val:string ) {
+    const days = ['Sun','Mon','Tues','Wed','Thur','Fri','Sat'];
+    let date = new Date(val);
+    return days[date.getDay()] + " " + date.toLocaleTimeString();
+  }
+
+  formatFull(val:string ) {
+    const months = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+    let date = new Date(val);
+    return date.getDate() + " " + months[date.getMonth()]  ;
   }
 }
