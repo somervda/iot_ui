@@ -78,6 +78,14 @@ export class ChartComponent {
   xAxisLabel: string = 'Date/Time';
   yAxisLabel: string = 'Value';
   timeline: boolean = true;
+  xAxisTicks = [
+    (new Date("2024-08-13 00:00:00")).toISOString(),
+    new Date("2024-08-13 12:00:00").toISOString(),
+    new Date("2024-08-14 00:00:00").toISOString(),
+    new Date("2024-08-14 12:00:00").toISOString(),
+
+  ];
+  // xAxisTicks :any[] = [22,33  ];
   field = '';
   displayField = '';
   showFahrenheit = false;
@@ -94,14 +102,6 @@ export class ChartComponent {
     this.getChart();
   }
 
-  formatX(val: string) {
-    this.counter++;
-    if (this.counter % 2 == 0)
-      return val
-    else
-      return ''
-
-  }
 
   getChart() {
     console.log('getChart:', this.measurementQuery);

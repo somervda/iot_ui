@@ -20,7 +20,7 @@
     [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel"
     [yScaleMin]="yScaleMin"
-    [xAxisTickFormatting]='formatX.bind(this)'
+    [xAxisTicks] = "xAxisTicks"
 
   >
     <ng-template #tooltipTemplate let-model="model">
