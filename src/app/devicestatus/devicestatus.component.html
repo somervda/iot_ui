@@ -8,9 +8,16 @@
   <mat-card-content>
     @for (measurement of measurements; track measurement){
     <div>{{ measurement.value }} {{ measurement.key }}</div>
-    }
-    @if(status?.name == 'Location') {
-      <a href="https://www.google.com/maps/search/?api=1&query=40.46985%2C-75.22369">View on Map</a>
+    @if(status?.name == 'Climate' && measurement.key=="celsius") {
+    <div>{{ toFahrenheit(measurement.value) }} Fahrenheit</div>
+    } } @if(status?.name == 'Location') {
+    <a
+      href="https://www.google.com/maps/search/?api=1&query={{ latitude }}%2C{{
+        longitude
+      }}"
+      target="_blank"
+      >View on Map</a
+    >
 
     }
   </mat-card-content>

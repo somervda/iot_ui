@@ -11,6 +11,8 @@ import { Status } from '../services/measurements.service';
 })
 export class DevicestatusComponent implements OnInit {
   @Input() status: Status | undefined;
+  latitude = 0;
+  longitude = 0;
   measurements: { key: string; value: number }[] = [];
 
   ngOnInit(): void {
@@ -22,6 +24,14 @@ export class DevicestatusComponent implements OnInit {
         console.log(`${key}: ${value}`);
         if (typeof value === 'number') {
           this.measurements.push({ key: key, value: value });
+          if (this.status?.name == 'Location') {
+            if (key == 'lat') {
+              this.latitude = value;
+            }
+            if (key == 'lng') {
+              this.longitude = value;
+            }
+          }
         }
       }
     }
@@ -32,5 +42,9 @@ export class DevicestatusComponent implements OnInit {
       let date = new Date(umt * 1000);
       return date.toLocaleTimeString();
     } else return 'Unknown';
+  }
+
+  toFahrenheit(celsius: number) {
+    return Math.round((celsius * 1.8 + 32) * 10) / 10;
   }
 }
