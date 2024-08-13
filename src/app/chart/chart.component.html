@@ -20,7 +20,8 @@
     [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel"
     [yScaleMin]="yScaleMin"
-    [autoScale]=true
+    [xAxisTickFormatting]='formatX.bind(this)'
+
   >
     <ng-template #tooltipTemplate let-model="model">
       <span class="tooltip-label">{{ toMyDate(model.name) }}</span>

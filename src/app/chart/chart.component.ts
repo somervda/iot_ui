@@ -28,7 +28,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 export class ChartComponent {
   measurements$$: Subscription | undefined;
 
- 
+
 
   displayChart = false;
   // options
@@ -84,9 +84,9 @@ export class ChartComponent {
   measurementQuery: MeasurementQuery | undefined;
   celsiusFields = ['celsius', 'avg_celsius', 'min_celsius', 'max_celsius'];
 
-  counter=0;
+  counter = 0;
 
-  constructor(private measurementService: MeasurementsService) {}
+  constructor(private measurementService: MeasurementsService) { }
 
   selectorChanged(measurementQuery: MeasurementQuery) {
     this.measurementQuery = measurementQuery;
@@ -94,8 +94,13 @@ export class ChartComponent {
     this.getChart();
   }
 
-  formatX(val:string) {
-    return this.counter.toString();
+  formatX(val: string) {
+    this.counter++;
+    if (this.counter % 2 == 0)
+      return val
+    else
+      return ''
+
   }
 
   getChart() {
