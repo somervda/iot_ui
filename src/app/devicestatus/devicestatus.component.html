@@ -9,5 +9,9 @@
     @for (measurement of measurements; track measurement){
     <div>{{ measurement.value }} {{ measurement.key }}</div>
     }
+    @if(status?.name == 'Location') {
+      <a href="https://www.google.com/maps/search/?api=1&query=40.46985%2C-75.22369">View on Map</a>
+
+    }
   </mat-card-content>
 </mat-card>
