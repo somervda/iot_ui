@@ -8,6 +8,16 @@
   ></app-selector>
 </mat-expansion-panel>
 @if(displayData){
+<div style="padding: 5px">
+  <button
+    mat-flat-button
+    class="fButton"
+    style="float: right; font-size: larger"
+    (click)="downloadResults()"
+  >
+    Download Data
+  </button>
+</div>
 <table mat-table [dataSource]="results">
   @for(column of columns; track column ){
   <ng-container [matColumnDef]="column">
