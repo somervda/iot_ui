@@ -25,10 +25,10 @@ export class DevicestatusComponent implements OnInit {
         if (typeof value === 'number') {
           this.measurements.push({ key: key, value: value });
           if (this.status?.name == 'Location') {
-            if (key == 'lat') {
+            if (key == 'latitude') {
               this.latitude = value;
             }
-            if (key == 'lng') {
+            if (key == 'longitude') {
               this.longitude = value;
             }
           }
