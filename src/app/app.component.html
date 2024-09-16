@@ -1,5 +1,5 @@
-<div style="width: 100%; background-color: white;height: 100%;">
-  <mat-tab-group>
+<div style="width: 100%; background-color: white; height: 100%">
+  <mat-tab-group [selectedIndex]="tabIndex">
     <mat-tab label="Status">
       <ng-template matTabContent><app-status></app-status> </ng-template>
     </mat-tab>
