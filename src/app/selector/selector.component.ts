@@ -174,6 +174,14 @@ export class SelectorComponent {
         UMT = UMT.startOf('year');
         break;
       }
+      case 6: {
+        UMT = UMT.minus({ hours: 168 });
+        break;
+      }
+      case 7: {
+        UMT = UMT.minus({ hours: 3 });
+        break;
+      }
     }
     // let monthUMT = DateTime.local() // get the current time in local timezone
     //   .startOf('month') // set the time to the start of the current day

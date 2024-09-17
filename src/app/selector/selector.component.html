@@ -32,15 +32,17 @@
     </mat-select>
     }
   </div>
-}
+  }
   <div style="grid-column: 1" class="label">Start From</div>
   <div>
     <mat-select
       [(ngModel)]="duration"
       (selectionChange)="tryEmitMeasurementQuery()"
     >
+      <mat-option [value]="7">3 hours ago</mat-option>
       <mat-option [value]="0">6 hours ago</mat-option>
       <mat-option [value]="1">24 Hours ago</mat-option>
+      <mat-option [value]="6">Week Ago</mat-option>
       <mat-option [value]="2">Start of this Week</mat-option>
       <mat-option [value]="3">Start of this Month</mat-option>
       <mat-option [value]="4">Start of this Quarter</mat-option>
