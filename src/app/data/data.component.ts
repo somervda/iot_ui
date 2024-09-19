@@ -9,6 +9,7 @@ import { SelectorComponent } from '../selector/selector.component';
 import { Subscription } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 
+
 @Component({
   selector: 'app-data',
   standalone: true,
@@ -29,8 +30,9 @@ export class DataComponent {
   results: {}[] = [];
   columns: string[] = [];
 
-  constructor(private measurementService: MeasurementsService) {}
-
+  constructor(private measurementService: MeasurementsService) {
+  }
+  
   selectorChanged(measurementQuery: MeasurementQuery) {
     console.log('*selectorChanged:', measurementQuery);
     this.getData(measurementQuery);

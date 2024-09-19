@@ -13,6 +13,7 @@ import {
   Device,
   MeasurementQuery,
 } from '../services/measurements.service';
+import { SelectionsService } from '../services/selections.service';
 
 @Component({
   selector: 'app-selector',
@@ -49,7 +50,8 @@ export class SelectorComponent {
     field: '',
   };
 
-  constructor(private measurmentsService: MeasurementsService) {
+  constructor(private measurmentsService: MeasurementsService, private selections: SelectionsService) {
+    if (this.selections.duration !=-1) this.duration = this.selections.duration;
     this.loadApplications();
   }
 
@@ -60,6 +62,8 @@ export class SelectorComponent {
       .getApplications()
       .subscribe((applications) => {
         console.log(applications);
+        if (this.selections.application_id != 0)
+          this.application_id = this.selections.application_id;
         this.applications = applications;
         this.applicationSelected();
       });
@@ -198,6 +202,10 @@ export class SelectorComponent {
       .getApplicationDevices(this.application_id)
       .subscribe((applicationdevices) => {
         console.log('loadApplicationDevices:', applicationdevices);
+        if (this.selections.device_id != 0) {
+          this.device_id = this.selections.device_id;
+          this.tryEmitMeasurementQuery();
+        }
         this.devices = applicationdevices;
       });
   }

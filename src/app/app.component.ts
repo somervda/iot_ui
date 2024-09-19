@@ -5,6 +5,7 @@ import { DataComponent } from './data/data.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { StatusComponent } from './status/status.component';
 import { HttpParams } from '@angular/common/http';
+import { SelectionsService } from './services/selections.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,11 @@ import { HttpParams } from '@angular/common/http';
 export class AppComponent {
   title = 'iot_ui';
   tabIndex = 0;
-  constructor() {
+  constructor(private selections : SelectionsService) {
+    this.processURL()
+  }
+
+  processURL() {
     let url = window.location.href;
     console.log('url', url);
     let paramValue;
@@ -50,6 +55,15 @@ export class AppComponent {
             break;
           }
         }
+      }
+      if (httpParams.get('application_id')) {
+        this.selections.application_id = parseInt(httpParams.get('application_id') + "");
+      }
+      if (httpParams.get('device_id')) {
+        this.selections.device_id = parseInt(httpParams.get('device_id') + "");
+      }
+      if (httpParams.get('duration')) {
+        this.selections.duration = parseInt(httpParams.get('duration') + "");
       }
     }
   }
