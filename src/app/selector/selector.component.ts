@@ -50,8 +50,12 @@ export class SelectorComponent {
     field: '',
   };
 
-  constructor(private measurmentsService: MeasurementsService, private selections: SelectionsService) {
-    if (this.selections.duration !=-1) this.duration = this.selections.duration;
+  constructor(
+    private measurmentsService: MeasurementsService,
+    private selections: SelectionsService
+  ) {
+    if (this.selections.duration != -1)
+      this.duration = this.selections.duration;
     this.loadApplications();
   }
 
@@ -83,6 +87,12 @@ export class SelectorComponent {
     if (this.includeFields) {
       this.loadApplicationFields();
     }
+    console.log('this.selections.summarize', this.selections.summarize);
+    if (this.selections.summarize != -1) {
+      this.summarize = this.selections.summarize;
+      this.loadApplicationFields();
+      this.isSummarized = this.summarize > 0;
+    }
   }
 
   loadApplicationFields() {
@@ -96,6 +106,10 @@ export class SelectorComponent {
         this.fields?.push('min_' + field);
         this.fields?.push('max_' + field);
       });
+    }
+    if (this.selections.field != '') {
+      this.field = this.selections.field;
+      // this.tryEmitMeasurementQuery();
     }
   }
 
@@ -140,9 +154,11 @@ export class SelectorComponent {
       } else {
         this.measurementQuery.field = '';
       }
+      this.selections.clear();
       this.selectorChange.emit(this.measurementQuery);
     } else {
       this.measurementQuery.application_id = -1;
+      this.selections.clear();
       this.selectorChange.emit(this.measurementQuery);
     }
   }

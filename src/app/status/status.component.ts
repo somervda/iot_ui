@@ -12,6 +12,7 @@ import {
   Status,
   MeasurementQuery,
 } from '../services/measurements.service';
+import { SelectionsService } from '../services/selections.service';
 
 // Note https://www.google.com/maps/search/?api=1&query=40.46985%2C-75.22369
 
@@ -29,7 +30,10 @@ export class StatusComponent {
   device_id = -1;
   statuses: Status[] | undefined;
 
-  constructor(private measurementsService: MeasurementsService) {
+  constructor(
+    private measurementsService: MeasurementsService,
+    private selections: SelectionsService
+  ) {
     this.loadDevices();
   }
 
@@ -38,6 +42,11 @@ export class StatusComponent {
       .getDevices()
       .subscribe((devices) => {
         console.log(devices);
+        if (this.selections.device_id != 0) {
+          this.device_id = this.selections.device_id;
+          this.selections.clear();
+          this.deviceSelected();
+        }
         this.devices = devices;
       });
   }
@@ -48,6 +57,7 @@ export class StatusComponent {
       .getDeviceApplicationsStatus(this.device_id)
       .subscribe((statuses) => {
         console.log('deviceSelected1', statuses);
+
         this.statuses = statuses;
       });
   }

@@ -23,8 +23,8 @@ import { SelectionsService } from './services/selections.service';
 export class AppComponent {
   title = 'iot_ui';
   tabIndex = 0;
-  constructor(private selections : SelectionsService) {
-    this.processURL()
+  constructor(private selections: SelectionsService) {
+    this.processURL();
   }
 
   processURL() {
@@ -57,13 +57,21 @@ export class AppComponent {
         }
       }
       if (httpParams.get('application_id')) {
-        this.selections.application_id = parseInt(httpParams.get('application_id') + "");
+        this.selections.application_id = parseInt(
+          httpParams.get('application_id') + ''
+        );
       }
       if (httpParams.get('device_id')) {
-        this.selections.device_id = parseInt(httpParams.get('device_id') + "");
+        this.selections.device_id = parseInt(httpParams.get('device_id') + '');
       }
       if (httpParams.get('duration')) {
-        this.selections.duration = parseInt(httpParams.get('duration') + "");
+        this.selections.duration = parseInt(httpParams.get('duration') + '');
+      }
+      if (httpParams.get('field')) {
+        this.selections.field = httpParams.get('field') + '';
+      }
+      if (httpParams.get('summarize')) {
+        this.selections.summarize = parseInt(httpParams.get('summarize') + '');
       }
     }
   }
