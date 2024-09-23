@@ -24,6 +24,7 @@ import { SelectionsService } from '../services/selections.service';
 })
 export class SelectorComponent {
   @Input() includeFields: boolean = false;
+  @Input() tab: string = '';
   @Output() selectorChange = new EventEmitter<MeasurementQuery>();
 
   applications$$: Subscription | undefined;
@@ -41,6 +42,8 @@ export class SelectorComponent {
   summarize = 0;
   isSummarized = false;
 
+  url = '';
+
   measurementQuery: MeasurementQuery = {
     application_id: 0,
     device_id: 0,
@@ -48,15 +51,17 @@ export class SelectorComponent {
     rows: 100,
     grouping: 0,
     field: '',
+    duration: -1,
   };
 
   constructor(
     private measurmentsService: MeasurementsService,
     private selections: SelectionsService
   ) {
-    if (this.selections.duration != -1)
-      this.duration = this.selections.duration;
     this.loadApplications();
+    if (this.selections.duration != -1) {
+      this.duration = this.selections.duration;
+    }
   }
 
   loadApplications() {
@@ -75,6 +80,7 @@ export class SelectorComponent {
 
   applicationSelected() {
     console.log('applicationSelected:', this.application_id);
+    this.updateURL();
 
     if (this.applications) {
       this.application = this.applications.find(
@@ -93,6 +99,31 @@ export class SelectorComponent {
       this.loadApplicationFields();
       this.isSummarized = this.summarize > 0;
     }
+  }
+
+  updateURL() {
+    let url = window.location.href;
+    console.log('url', url);
+    let paramValue;
+    this.url = url;
+    if (url.includes('?')) {
+      this.url = url.split('?')[0];
+    }
+    this.url += '?tab=' + this.tab;
+    this.url += '&application_id=' + this.application_id.toString();
+    if (this.devices) {
+      const found = this.devices.find(
+        (element) => element.id == this.device_id
+      );
+      console.log('found:', found, 'devices:', this.devices);
+      if (found) this.url += '&device_id=' + this.device_id.toString();
+    }
+    if (this.fields) {
+      const found = this.fields.find((element) => element == this.field);
+      console.log('found:', found, 'fields:', this.fields);
+      if (found) this.url += '&field=' + this.field;
+    }
+    this.url += '&duration=' + this.duration;
   }
 
   loadApplicationFields() {
@@ -138,6 +169,7 @@ export class SelectorComponent {
       '|',
       this.device_id
     );
+    this.updateURL();
     // Emit measurement query if values selected
     if (
       this.application_id > 0 &&
@@ -147,6 +179,7 @@ export class SelectorComponent {
       this.measurementQuery.application_id = this.application_id;
       this.measurementQuery.device_id = this.device_id;
       this.setStartUMT();
+      this.measurementQuery.duration = this.duration;
       this.measurementQuery.rows = 1000;
       this.measurementQuery.grouping = this.summarize;
       if (this.includeFields) {
@@ -155,10 +188,12 @@ export class SelectorComponent {
         this.measurementQuery.field = '';
       }
       this.selections.clear();
+      console.log('this.measurementQuery', this.measurementQuery);
       this.selectorChange.emit(this.measurementQuery);
     } else {
       this.measurementQuery.application_id = -1;
       this.selections.clear();
+      console.log('this.measurementQuery', this.measurementQuery);
       this.selectorChange.emit(this.measurementQuery);
     }
   }
@@ -168,6 +203,7 @@ export class SelectorComponent {
     let UMT = DateTime.local() // get the current time in local timezone
       .setZone('GMT'); // change time zone back to GMT (zero offset)
     console.log('currentUMT:', UMT.valueOf());
+    this.updateURL();
     // set the period start based on duration
     switch (this.duration) {
       case 0: {
@@ -212,6 +248,7 @@ export class SelectorComponent {
 
   loadApplicationDevices() {
     this.devices = [];
+    this.updateURL();
     this.device_id = -1;
     // get the array of available result files
     this.devices$$ = this.measurmentsService

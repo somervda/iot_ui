@@ -28,8 +28,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 export class ChartComponent {
   measurements$$: Subscription | undefined;
 
-
-
   displayChart = false;
   // options
   multi = [
@@ -78,7 +76,8 @@ export class ChartComponent {
   xAxisLabel: string = 'Date/Time';
   yAxisLabel: string = 'Value';
   timeline: boolean = true;
-  xTickStyle = "hours"
+  xTickStyle = 'hours';
+  url = 'hi';
 
   field = '';
   displayField = '';
@@ -88,14 +87,14 @@ export class ChartComponent {
 
   counter = 0;
 
-  constructor(private measurementService: MeasurementsService) { }
+  constructor(private measurementService: MeasurementsService) {}
 
   selectorChanged(measurementQuery: MeasurementQuery) {
     this.measurementQuery = measurementQuery;
     console.log('*selectorChanged:', measurementQuery);
+
     this.getChart();
   }
-
 
   getChart() {
     console.log('getChart:', this.measurementQuery);
@@ -116,16 +115,16 @@ export class ChartComponent {
           .subscribe((results) => {
             console.log('getSeriesMeasurements', results);
             let series: { name: string; value: number }[] = [];
-            let rangeSeconds = Math.trunc(((new Date()).valueOf()/1000) - measurementQuery.umt);
-            
+            let rangeSeconds = Math.trunc(
+              new Date().valueOf() / 1000 - measurementQuery.umt
+            );
+
             console.log(rangeSeconds);
-            if (rangeSeconds<87000)
-              this.xTickStyle="hour";
-            else if (rangeSeconds<604800) {
-              this.xTickStyle="day";
-            }
-            else  {
-              this.xTickStyle="full";
+            if (rangeSeconds < 87000) this.xTickStyle = 'hour';
+            else if (rangeSeconds < 604800) {
+              this.xTickStyle = 'day';
+            } else {
+              this.xTickStyle = 'full';
             }
             results.forEach((result, idx: number) => {
               let value = 0;
@@ -183,19 +182,32 @@ export class ChartComponent {
     this.getChart();
   }
 
-  formatHour(val:string ) {
+  formatHour(val: string) {
     let date = new Date(val);
     return date.toLocaleTimeString();
   }
-  formatDay(val:string ) {
-    const days = ['Sun','Mon','Tues','Wed','Thur','Fri','Sat'];
+  formatDay(val: string) {
+    const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
     let date = new Date(val);
-    return days[date.getDay()] + " " + date.toLocaleTimeString();
+    return days[date.getDay()] + ' ' + date.toLocaleTimeString();
   }
 
-  formatFull(val:string ) {
-    const months = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+  formatFull(val: string) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'June',
+      'July',
+      'Aug',
+      'Sept',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     let date = new Date(val);
-    return date.getDate() + " " + months[date.getMonth()]  ;
+    return date.getDate() + ' ' + months[date.getMonth()];
   }
 }

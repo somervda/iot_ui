@@ -31,6 +31,7 @@ export interface MeasurementQuery {
   rows: number;
   grouping: number;
   field: string;
+  duration: number;
 }
 
 @Injectable({

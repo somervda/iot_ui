@@ -29,6 +29,7 @@ export class StatusComponent {
   devices: Device[] | undefined;
   device_id = -1;
   statuses: Status[] | undefined;
+  url = '';
 
   constructor(
     private measurementsService: MeasurementsService,
@@ -44,6 +45,7 @@ export class StatusComponent {
         console.log(devices);
         if (this.selections.device_id != 0) {
           this.device_id = this.selections.device_id;
+          this.updateURL();
           this.selections.clear();
           this.deviceSelected();
         }
@@ -53,6 +55,7 @@ export class StatusComponent {
 
   deviceSelected() {
     console.log('deviceSelected');
+    this.updateURL();
     this.status$$ = this.measurementsService
       .getDeviceApplicationsStatus(this.device_id)
       .subscribe((statuses) => {
@@ -60,5 +63,18 @@ export class StatusComponent {
 
         this.statuses = statuses;
       });
+  }
+
+  updateURL() {
+    let url = window.location.href;
+    console.log('url', url);
+    let paramValue;
+    this.url = url;
+    if (url.includes('?')) {
+      this.url = url.split('?')[0];
+    }
+    this.url += '?tab=status';
+    if (this.device_id != -1)
+      this.url += '&device_id=' + this.device_id.toString();
   }
 }

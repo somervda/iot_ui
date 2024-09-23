@@ -25,6 +25,24 @@
   }
 }
 
+@media (min-width: 1000px) {
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 120px 2fr;
+    grid-gap: 10px;
+    grid-gap: 10px;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 1000px) {
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 120px 2fr;
+    grid-gap: 10px;
+    grid-gap: 10px;
+  }
+}
+
 .label {
   font-weight: 500;
   padding-left: 10px;

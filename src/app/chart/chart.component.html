@@ -3,7 +3,11 @@
     <mat-panel-title>Query Designer</mat-panel-title>
   </mat-expansion-panel-header>
 
-  <app-selector (selectorChange)="selectorChanged($event)" [includeFields]=true></app-selector>
+  <app-selector
+    (selectorChange)="selectorChanged($event)"
+    [includeFields]="true"
+    tab="chart"
+  ></app-selector>
   <!-- <button mat-flat-button class="fButton" (click)="getData()">Get Data</button> -->
 </mat-expansion-panel>
 
@@ -20,9 +24,13 @@
     [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel"
     [yScaleMin]="yScaleMin"
-    [xAxisTickFormatting]="xTickStyle=='hour'?formatHour:xTickStyle=='day'?formatDay:formatFull"
-
-
+    [xAxisTickFormatting]="
+      xTickStyle == 'hour'
+        ? formatHour
+        : xTickStyle == 'day'
+        ? formatDay
+        : formatFull
+    "
   >
     <ng-template #tooltipTemplate let-model="model">
       <span class="tooltip-label">{{ toMyDate(model.name) }}</span>
