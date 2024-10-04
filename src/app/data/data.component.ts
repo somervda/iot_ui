@@ -69,6 +69,17 @@ export class DataComponent {
             });
             console.log('columns:', this.columns);
             this.results = results;
+            // Extra column for google maps link for location data
+            if (measurementQuery.application_id==4) {
+              this.columns.push("map");
+              this.results.forEach((location, index) => {
+                (<any>location)["map"]="<a 'https://www.google.com/maps/search/?api=1&query=" + 
+                  (<any>location)['latitude'].toString() + "%2C" + (<any>location)['longitude'].toString() +
+                  "'>View</a>"; 
+              });
+              console.log('location results', this.results);
+
+            }
             this.displayData = true;
           }
         });
