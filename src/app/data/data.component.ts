@@ -9,7 +9,6 @@ import { SelectorComponent } from '../selector/selector.component';
 import { Subscription } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 
-
 @Component({
   selector: 'app-data',
   standalone: true,
@@ -30,9 +29,8 @@ export class DataComponent {
   results: {}[] = [];
   columns: string[] = [];
 
-  constructor(private measurementService: MeasurementsService) {
-  }
-  
+  constructor(private measurementService: MeasurementsService) {}
+
   selectorChanged(measurementQuery: MeasurementQuery) {
     console.log('*selectorChanged:', measurementQuery);
     this.getData(measurementQuery);
@@ -70,15 +68,34 @@ export class DataComponent {
             console.log('columns:', this.columns);
             this.results = results;
             // Extra column for google maps link for location data
-            if (measurementQuery.application_id==4) {
-              this.columns.push("map");
-              this.results.forEach((location, index) => {
-                (<any>location)["map"]="<a 'https://www.google.com/maps/search/?api=1&query=" + 
-                  (<any>location)['latitude'].toString() + "%2C" + (<any>location)['longitude'].toString() +
-                  "'>View</a>"; 
-              });
-              console.log('location results', this.results);
+            if (measurementQuery.application_id == 4) {
+              this.columns.push('map');
+              if (measurementQuery.grouping == 0) {
+                // Build google map url using non-summarized data
+                this.results.forEach((location, index) => {
+                  // (<any>location)['map'] = "<a href='https://www.google.com/maps'>View</a>";
 
+                  (<any>location)['map'] =
+                    "<a href='https://www.google.com/maps/search/?api=1&query=" +
+                    (<any>location)['latitude'].toString() +
+                    ',' +
+                    (<any>location)['longitude'].toString() +
+                    "' target='_blank'>View on Map</a>";
+                });
+              } else {
+                // Build map url using summarized data (averages)
+                this.results.forEach((location, index) => {
+                  // (<any>location)['map'] = "<a href='https://www.google.com/maps'>View</a>";
+
+                  (<any>location)['map'] =
+                    "<a href='https://www.google.com/maps/search/?api=1&query=" +
+                    (<any>location)['avg_latitude'].toString() +
+                    ',' +
+                    (<any>location)['avg_longitude'].toString() +
+                    "' target='_blank'>View on Map</a>";
+                });
+              }
+              console.log('location results', this.results);
             }
             this.displayData = true;
           }
