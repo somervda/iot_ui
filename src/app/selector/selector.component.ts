@@ -214,6 +214,14 @@ export class SelectorComponent {
         UMT = UMT.minus({ hours: 24 });
         break;
       }
+      case 10: {
+        UMT = UMT.minus({ hours: 48 });
+        break;
+      }
+      case 11: {
+        UMT = UMT.minus({ hours: 72 });
+        break;
+      }
       case 2: {
         UMT = UMT.startOf('week');
         break;
