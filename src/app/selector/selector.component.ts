@@ -239,7 +239,7 @@ export class SelectorComponent {
         break;
       }
       case 6: {
-        UMT = UMT.minus({ hours: 168 });
+        UMT = UMT.minus({ days: 5 });
         break;
       }
       case 7: {
