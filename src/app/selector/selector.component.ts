@@ -250,6 +250,10 @@ export class SelectorComponent {
         UMT = UMT.minus({ days: 7 });
         break;
       }
+      case 12: {
+        UMT = UMT.minus({ days: 14 });
+        break;
+      }
       case 9: {
         UMT = UMT.minus({ days: 30 });
         break;
