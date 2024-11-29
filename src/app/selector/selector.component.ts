@@ -180,6 +180,8 @@ export class SelectorComponent {
       this.measurementQuery.device_id = this.device_id;
       this.setStartUMT();
       this.measurementQuery.duration = this.duration;
+      // Limit on iot service needs to be changed
+      // to support more than 1000 rows
       this.measurementQuery.rows = 1000;
       this.measurementQuery.grouping = this.summarize;
       if (this.includeFields) {
