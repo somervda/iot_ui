@@ -182,7 +182,7 @@ export class SelectorComponent {
       this.measurementQuery.duration = this.duration;
       // Limit on iot service needs to be changed
       // to support more than 1000 rows
-      this.measurementQuery.rows = 1000;
+      this.measurementQuery.rows = 5000;
       this.measurementQuery.grouping = this.summarize;
       if (this.includeFields) {
         this.measurementQuery.field = this.field;
