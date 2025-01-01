@@ -260,6 +260,14 @@ export class SelectorComponent {
         UMT = UMT.minus({ days: 30 });
         break;
       }
+      case 13: {
+        UMT = UMT.minus({ days: 60 });
+        break;
+      }
+      case 14: {
+        UMT = UMT.minus({ days: 90 });
+        break;
+      }
     }
     // let monthUMT = DateTime.local() // get the current time in local timezone
     //   .startOf('month') // set the time to the start of the current day
