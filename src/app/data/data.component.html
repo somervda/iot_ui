@@ -9,28 +9,31 @@
   ></app-selector>
 </mat-expansion-panel>
 @if(displayData){
+
+<div class="table-container">
+  <table mat-table [dataSource]="results">
+    @for(column of columns; track column ){
+    <ng-container [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+      @if(column=='map'){
+      <td mat-cell *matCellDef="let result" [innerHTML]="result[column]">hi</td>
+      } @else {
+      <td mat-cell *matCellDef="let result">{{ result[column] }}</td>
+      }
+    </ng-container>
+    }
+    <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columns"></tr>
+  </table>
+</div>
 <div style="padding: 5px">
   <button
     mat-flat-button
     class="fButton"
-    style="float: right; font-size: larger"
+    style="float: center; font-size: larger"
     (click)="downloadResults()"
   >
     Download Data
   </button>
 </div>
-<table mat-table [dataSource]="results">
-  @for(column of columns; track column ){
-  <ng-container [matColumnDef]="column">
-    <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-    @if(column=='map'){
-    <td mat-cell *matCellDef="let result" [innerHTML]="result[column]">hi</td>
-    } @else {
-      <td mat-cell *matCellDef="let result">{{ result[column] }}</td>
-    }
-  </ng-container>
-  }
-  <tr mat-header-row *matHeaderRowDef="columns"></tr>
-  <tr mat-row *matRowDef="let myRowData; columns: columns"></tr>
-</table>
 }
