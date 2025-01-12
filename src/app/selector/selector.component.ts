@@ -80,7 +80,7 @@ export class SelectorComponent {
 
   applicationSelected() {
     console.log('applicationSelected:', this.application_id);
-    this.updateURL();
+    // this.updateURL();
 
     if (this.applications) {
       this.application = this.applications.find(
@@ -103,7 +103,7 @@ export class SelectorComponent {
 
   updateURL() {
     let url = window.location.href;
-    console.log('url', url);
+    console.log('updateUrl start');
     let paramValue;
     this.url = url;
     if (url.includes('?')) {
@@ -124,6 +124,12 @@ export class SelectorComponent {
       if (found) this.url += '&field=' + this.field;
     }
     this.url += '&duration=' + this.duration;
+
+    if (this.summarize != 0) {
+      this.url += '&summarize=' + this.summarize;
+    }
+
+    console.log('updateUrl new: ', this.url);
   }
 
   loadApplicationFields() {
@@ -205,7 +211,7 @@ export class SelectorComponent {
     let UMT = DateTime.local() // get the current time in local timezone
       .setZone('GMT'); // change time zone back to GMT (zero offset)
     console.log('currentUMT:', UMT.valueOf());
-    this.updateURL();
+    // this.updateURL();
     // set the period start based on duration
     switch (this.duration) {
       case 0: {
@@ -278,18 +284,22 @@ export class SelectorComponent {
 
   loadApplicationDevices() {
     this.devices = [];
-    this.updateURL();
+    // this.updateURL();
     this.device_id = -1;
     // get the array of available result files
     this.devices$$ = this.measurmentsService
       .getApplicationDevices(this.application_id)
       .subscribe((applicationdevices) => {
-        console.log('loadApplicationDevices:', applicationdevices);
+        console.log(
+          'loadApplicationDevices:',
+          applicationdevices,
+          this.selections.device_id
+        );
+        this.devices = applicationdevices;
         if (this.selections.device_id != 0) {
           this.device_id = this.selections.device_id;
           this.tryEmitMeasurementQuery();
         }
-        this.devices = applicationdevices;
       });
   }
 }
