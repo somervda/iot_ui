@@ -5,13 +5,14 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-
 export enum Globals {
-  HOSTANDPORT = 'pi4.home:8000',
+  HOSTANDPORT = 'pi4.local:8000',
 }
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes),
-    provideHttpClient(), provideAnimationsAsync()
-  ]
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(),
+    provideAnimationsAsync(),
+  ],
 };
